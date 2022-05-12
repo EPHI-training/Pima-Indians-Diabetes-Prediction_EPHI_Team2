@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
@@ -8,6 +7,8 @@ import plotly.express as px
 import seaborn as sns
 import plotly.express as px
 from sklearn.decomposition import PCA
+
+
 class eda_diab:
     def _init_(self,df,X,Y):
         self.df = df
@@ -24,33 +25,46 @@ class eda_diab:
         fig = go.Figure()
         for i in range (len(X.columns)):
             fig.add_trace(go.Box(
-                y=list(X.columns[i]),
-                name=X.columns[i],
-                jitter=0.5,
-                boxpoints='all'
-                ))           
+                
+                    y=list(X.columns[i]),
+                    # x=np.array(Y),
+                    name=X.columns[i],
+                        # marker_color='green'
+                    # width=0.5,
+                    jitter=0.5,
+                    boxpoints='all'
+                ))
+            
         fig.update_layout(
+            # autorange = True
+            # group together boxes of the different
+            # traces for each value of x
             boxmode='group'
+            # fig.update_traces(width = 0.2)
         )
-        
         fig.show()
-    def box_plots_1(self,X,Y): ###Sick Class(1)
+    def box_plots_1(self, X): ###Sick Class(1)
         fig = go.Figure()
         for i in range (len(X.columns)):
             fig.add_trace(go.Box(
                 y=list(X.columns[i]),
                 x=np.array(Y),
                 name=X.columns[i],
+                        # marker_color='green'
+                # width=0.5,
                 jitter=0.5,
                 boxpoints='all'
                 ))
             
         fig.update_layout(
+            # autorange = True
+            # group together boxes of the different
+            # traces for each value of x
             boxmode='group'
+            # fig.update_traces(width = 0.2)
         )
-        fig.update_traces(width=0.5)
         fig.show()
-    def pca_viz(self,df,X,Y):
+    def pca_viz(df,X,Y):
         pca = PCA(n_components = 2)
         X_reduced = pca.fit_transform(X)
         X_reduced = pd.DataFrame(X_reduced)
